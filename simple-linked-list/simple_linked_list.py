@@ -1,32 +1,47 @@
 class Node:
     def __init__(self, value):
-        pass
+        self._next = None
+        self._value = value
 
     def value(self):
-        pass
+        return self._value
 
     def next(self):
-        pass
+        return self._next
 
 
 class LinkedList:
     def __init__(self, values=[]):
-        pass
+        self._len = 0
+        self._head = None
+
+        for value in values:
+            self.push(value)
 
     def __len__(self):
-        pass
+        return self._len
+    
+    def __iter__(self):
+        while self._len > 0:
+            yield self.pop()
 
     def head(self):
-        pass
+        if self._head is None:
+            raise EmptyListException("No items in list")
+        return self._head
 
     def push(self, value):
-        pass
+        new_node = Node(value)
+        self._len += 1
+        new_node._next, self._head = self._head, new_node
 
     def pop(self):
-        pass
+        old_head, self._head = self.head(), self.head().next()
+        self._len -= 1
+        return old_head.value()
 
     def reversed(self):
-        pass
+        return LinkedList(values = self)
 
 
 class EmptyListException(Exception):
